@@ -1,8 +1,10 @@
 .buttonCommon {
-    width: 45%;
+    width: 25%;
+    min-width: 93px;
     border-radius: 10px;
     border: none;
     outline: none;
+    margin: 0.2rem 0.5rem;
     padding: 10px;
     font-size: 2rem;
     border: none;

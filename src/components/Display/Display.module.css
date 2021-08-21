@@ -1,19 +1,11 @@
-.display {
+.displayContainer {
+    height: 34vh;
     background-color: #15231e;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 2rem;
     margin-bottom: 1rem;
     border-radius: 10px;
-}
-
-.count {
-    font-size: 3rem;
-    color: azure;
-}
-
-.redCount {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #bb0000;
 }

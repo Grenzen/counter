@@ -1,0 +1,10 @@
+.count {
+    font-size: 4rem;
+    color: azure;
+}
+
+.redCount {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #bb0000;
+}
