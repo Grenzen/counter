@@ -1,0 +1,27 @@
+.buttonCommon {
+    width: 45%;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-size: 2rem;
+    border: none;
+    cursor: pointer;
+    color: azure;
+    background-color: #15231e;
+}
+
+.active {
+    background-color: #15231e;
+}
+
+.active:hover {
+    transition: all 0.4s ease-in;
+    background-color: #02311e;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}

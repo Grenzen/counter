@@ -1,0 +1,19 @@
+.display {
+    background-color: #15231e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+}
+
+.count {
+    font-size: 3rem;
+    color: azure;
+}
+
+.redCount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #bb0000;
+}
