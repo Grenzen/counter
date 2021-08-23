@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import { Counter } from './components/Counter/Counter'
 import s from './App.module.css'
 
@@ -19,6 +19,27 @@ export const App: React.FC<AppProps> = ({ startMinValue, startMaxValue }) => {
     const [error, setError] = useState<string>('')
     const [interfaceMode, setInterfaceMode] = useState<InterfaceType>('counter')
 
+    const changeValueInSettings = (e: ChangeEvent<HTMLInputElement>) => {
+        setError('')
+        const input = e.currentTarget
+        if (+input.value < 0) {
+            setError(`${ e.currentTarget.name } must be positive or 0`)
+            return
+        }
+        switch (input.name) {
+            case 'min value':
+                +input.value < maxValue
+                    ? setMinValue(+input.value)
+                    : setError(`${ input.name } must be less than ${ maxValue }`)
+                break
+            case 'max value':
+                +input.value > minValue
+                    ? setMaxValue(+input.value)
+                    : setError(`${ input.name } must be more than ${ minValue }`)
+                break
+        }
+    }
+
     return (
         <div className={ s.appContainer }>
             <Counter
@@ -27,11 +48,10 @@ export const App: React.FC<AppProps> = ({ startMinValue, startMaxValue }) => {
                 maxValue={ maxValue }
                 interfaceMode={ interfaceMode }
                 error={ error }
-                setErrorCallback={ setError }
                 setCountCallback={ setCount }
-                setMinValueCallback={ setMinValue }
-                setMaxValueCallback={ setMaxValue }
                 setInterfaceModeCallback={ setInterfaceMode }
+
+                changeValueInSettingsCallback={ changeValueInSettings }
             />
         </div>
     )

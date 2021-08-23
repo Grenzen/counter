@@ -6,40 +6,16 @@ type SettingsModeType = {
     minValue: number
     maxValue: number
     error: string
-    setErrorCallback: (error: string) => void
-    setMinValueCallback: (value: number) => void
-    setMaxValueCallback: (value: number) => void
+    changeValueInSettingsCallback: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const SettingsMode: React.FC<SettingsModeType> = (
     {
-        minValue, maxValue, error,
-        setMaxValueCallback, setMinValueCallback,
-        setErrorCallback,
+        minValue, maxValue, error, changeValueInSettingsCallback,
     }) => {
+    
     const inputClass = error.length ? s.inputError : s.inputCorrect
-
-    const changeValue = (e: ChangeEvent<HTMLInputElement>) => {
-        setErrorCallback('')
-        const input = e.currentTarget
-        if (+input.value < 0) {
-            setErrorCallback(`${ e.currentTarget.name } must be positive or 0`)
-            return
-        }
-
-        switch (input.name) {
-            case 'min value':
-                +input.value < maxValue
-                    ? setMinValueCallback(+input.value)
-                    : setErrorCallback(`${ input.name } must be less than ${ maxValue }`)
-                break
-            case 'max value':
-                +input.value > minValue
-                    ? setMaxValueCallback(+input.value)
-                    : setErrorCallback(`${ input.name } must be more than ${ minValue }`)
-                break
-        }
-    }
+    const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValueInSettingsCallback(e)
 
     return (
         <>

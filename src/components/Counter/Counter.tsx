@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { Display } from '../Display/Dispaly'
 import s from './Counter.module.css'
 import { InterfaceType } from '../../App'
@@ -10,11 +10,9 @@ type CounterTypes = {
     maxValue: number
     interfaceMode: InterfaceType
     error: string
-    setErrorCallback: (error: string) => void
     setCountCallback: (count: number) => void
-    setMinValueCallback: (value: number) => void
-    setMaxValueCallback: (value: number) => void
     setInterfaceModeCallback: (mode: InterfaceType) => void
+    changeValueInSettingsCallback: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 
@@ -22,9 +20,8 @@ export const Counter: React.FC<CounterTypes> = (
     {
         count, minValue, maxValue,
         interfaceMode, error,
-        setMinValueCallback, setMaxValueCallback,
         setCountCallback, setInterfaceModeCallback,
-        setErrorCallback,
+        changeValueInSettingsCallback,
     }) => {
     return (
         <div className={ s.counterContainer }>
@@ -34,9 +31,7 @@ export const Counter: React.FC<CounterTypes> = (
                 maxValue={ maxValue }
                 interfaceMode={ interfaceMode }
                 error={ error }
-                setErrorCallback={ setErrorCallback }
-                setMinValueCallback={ setMinValueCallback }
-                setMaxValueCallback={ setMaxValueCallback }
+                changeValueInSettingsCallback={ changeValueInSettingsCallback }
             />
             <ButtonGroup
                 interfaceMode={ interfaceMode }
