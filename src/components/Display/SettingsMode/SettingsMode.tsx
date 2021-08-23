@@ -6,16 +6,16 @@ type SettingsModeType = {
     minValue: number
     maxValue: number
     error: string
-    changeValueInSettingsCallback: (e: ChangeEvent<HTMLInputElement>) => void
+    changeValuesInSettingsCallback: (input: HTMLInputElement) => void
 }
 
 export const SettingsMode: React.FC<SettingsModeType> = (
     {
-        minValue, maxValue, error, changeValueInSettingsCallback,
+        minValue, maxValue, error, changeValuesInSettingsCallback,
     }) => {
     
     const inputClass = error.length ? s.inputError : s.inputCorrect
-    const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValueInSettingsCallback(e)
+    const changeValue = (e: ChangeEvent<HTMLInputElement>) => changeValuesInSettingsCallback(e.currentTarget)
 
     return (
         <>

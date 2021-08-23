@@ -10,36 +10,34 @@ type ButtonGroupType = {
     error: string
     minValue: number
     maxValue: number
-    setCountCallback: (count: number) => void
-    setInterfaceModeCallback: (mode: InterfaceType) => void
+    changeCountAndStorageCallback: (type: string) => void
 }
 
 export const ButtonGroup: React.FC<ButtonGroupType> = (
     {
         interfaceMode, count, error,
-        setCountCallback, minValue, maxValue,
-        setInterfaceModeCallback,
+        minValue, maxValue,
+        changeCountAndStorageCallback
     }) => {
     return (
         <div className={ s.buttonsContainer }>
             {
                 interfaceMode === 'counter'
-                    ? <CounterButton interfaceMode={ interfaceMode }
-                                     count={ count }
-                                     minValue={ minValue }
-                                     maxValue={ maxValue }
-                                     setCountCallback={ setCountCallback }
-                                     setInterfaceModeCallback={ setInterfaceModeCallback }/>
-                    : <SettingsButton
-                        error={ error }
-                        interfaceMode={ interfaceMode }
+                    ? <CounterButton
                         count={ count }
                         minValue={ minValue }
                         maxValue={ maxValue }
-                        setCountCallback={ setCountCallback }
-                        setInterfaceModeCallback={ setInterfaceModeCallback }
-                    />
+                        changeCountAndStorageCallback={ changeCountAndStorageCallback }
+                    /> : null
             }
+            <SettingsButton
+                error={ error }
+                count={ count }
+                minValue={ minValue }
+                maxValue={ maxValue }
+                changeCountAndStorageCallback={ changeCountAndStorageCallback }
+            />
+
         </div>
     )
 }

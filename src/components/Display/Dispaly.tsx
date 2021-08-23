@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import s from './Display.module.css'
 import { InterfaceType } from '../../App'
 import { CountMode } from './CountMode/CountMode'
@@ -10,7 +10,7 @@ type DisplayTypes = {
     maxValue: number
     interfaceMode: InterfaceType
     error: string
-    changeValueInSettingsCallback: (e: ChangeEvent<HTMLInputElement>) => void
+    changeValuesInSettingsCallback: (input: HTMLInputElement) => void
 
 }
 
@@ -18,7 +18,7 @@ type DisplayTypes = {
 export const Display: React.FC<DisplayTypes> = (
     {
         count, maxValue, minValue,
-        interfaceMode, error, changeValueInSettingsCallback,
+        interfaceMode, error, changeValuesInSettingsCallback,
     }) => {
 
     return (
@@ -32,7 +32,7 @@ export const Display: React.FC<DisplayTypes> = (
                     minValue={ minValue }
                     maxValue={ maxValue }
                     error={ error }
-                    changeValueInSettingsCallback={ changeValueInSettingsCallback }
+                    changeValuesInSettingsCallback={ changeValuesInSettingsCallback }
                 />
             }
         </div>
