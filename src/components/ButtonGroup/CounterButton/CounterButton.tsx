@@ -11,24 +11,19 @@ type CounterButtonType = {
 
 export const CounterButton: React.FC<CounterButtonType> = (
     {
-        count,
-        minValue, maxValue,
+        count, minValue, maxValue,
         changeCountAndStorageCallback
     }) => {
     return (
         <>
             <Button
                 type={ 'inc' }
-                count={ count }
-                minValue={ minValue }
-                maxValue={ maxValue }
+                isDisabled={ count === maxValue }
                 changeCountAndStorageCallback={ changeCountAndStorageCallback }
             />
             <Button
                 type={ 'reset' }
-                count={ count }
-                minValue={ minValue }
-                maxValue={ maxValue }
+                isDisabled={ count === minValue }
                 changeCountAndStorageCallback={ changeCountAndStorageCallback }
             />
         </>

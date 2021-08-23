@@ -32,12 +32,8 @@ export const ButtonGroup: React.FC<ButtonGroupType> = (
             }
             <SettingsButton
                 error={ error }
-                count={ count }
-                minValue={ minValue }
-                maxValue={ maxValue }
                 changeCountAndStorageCallback={ changeCountAndStorageCallback }
             />
-
         </div>
     )
 }
