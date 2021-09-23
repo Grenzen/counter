@@ -4,7 +4,7 @@ import { CounterActionTypes } from '../actions/counter'
 export type CounterStateType = {
     minValue: string
     maxValue: string
-    count: number
+    count: string
     errorMessage: string
     interfaceMode: 'display' | 'settings'
 }
@@ -12,7 +12,7 @@ export type CounterStateType = {
 const initialState: CounterStateType = {
     minValue: localStorage.getItem('minValue') as string || '0',
     maxValue: localStorage.getItem('maxValue') as string || '5',
-    count: 0,
+    count: localStorage.getItem('minValue') || '0',
     errorMessage: '',
     interfaceMode: 'display',
 }
@@ -36,6 +36,12 @@ export const counterReducer = (state = initialState, action: CounterActionTypes)
             const { errorMessage } = action.payload
             return { ...state, errorMessage }
         }
+        case types.CLEAR_ERROR_MESSAGE: {
+            return {
+                ...state,
+                errorMessage: '',
+            }
+        }
         case types.SET_INTERFACE_MODE: {
             return {
                 ...state,
@@ -45,19 +51,13 @@ export const counterReducer = (state = initialState, action: CounterActionTypes)
         case types.SET_COUNT: {
             return {
                 ...state,
-                count: +state.minValue,
+                count: state.minValue,
             }
         }
         case types.INCREMENT_COUNT: {
             return {
                 ...state,
-                count: state.count + 1,
-            }
-        }
-        case types.RESET_COUNT: {
-            return {
-                ...state,
-                count: +state.minValue
+                count: (+state.count + 1).toString(),
             }
         }
         default:

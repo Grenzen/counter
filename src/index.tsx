@@ -1,15 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { store } from './store'
 import './index.css'
 import { App } from './App'
 import reportWebVitals from './reportWebVitals'
-
-export const minValue = 0
-export const maxValue = 5
+import { Provider } from 'react-redux'
 
 ReactDOM.render(
     <React.StrictMode>
-        <App startMinValue={ minValue } startMaxValue={ maxValue }/>
+        <Provider store={ store }>
+            <App/>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root'),
 )

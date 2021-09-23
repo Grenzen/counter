@@ -4,23 +4,29 @@ type SetMinValueType = ReturnType<typeof setMinValue>
 type SetMaxValueType = ReturnType<typeof setMaxValue>
 type SaveSettingsType = ReturnType<typeof saveSettings>
 type SetErrorMessageType = ReturnType<typeof setErrorMessage>
+type ClearErrorMessageType = ReturnType<typeof clearErrorMessage>
+type ValidateValueType = ReturnType<typeof validateValue>
 type SetInterfaceModeType = ReturnType<typeof setInterfaceMode>
 type SetCountType = ReturnType<typeof setCount>
 type IncrementCountType = ReturnType<typeof incrementCount>
-type ResetCountType = ReturnType<typeof resetCount>
 
 export type CounterActionTypes =
     SetMinValueType | SetMaxValueType | SaveSettingsType | SetErrorMessageType
-    | SetInterfaceModeType | SetCountType | IncrementCountType | ResetCountType
+    | ClearErrorMessageType | ValidateValueType | SetInterfaceModeType | SetCountType | IncrementCountType
 
-type Values = { [ key: string ]: string }
+type ValuesType = { [ key: string ]: string }
+type ValidateType = {
+    value: string,
+    name: string
+}
+
 // Settings actions
-export const setMinValue = ({ minValue }: Values) => ({
+export const setMinValue = ({ minValue }: ValuesType) => ({
     type: types.SET_MIN_VALUE,
     payload: { minValue },
 } as const)
 
-export const setMaxValue = ({ maxValue }: Values) => ({
+export const setMaxValue = ({ maxValue }: ValuesType) => ({
     type: types.SET_MAX_VALUE,
     payload: { maxValue },
 } as const)
@@ -29,13 +35,21 @@ export const saveSettings = () => ({
     type: types.SAVE_SETTINGS,
 } as const)
 
-export const setErrorMessage = ({ errorMessage }: Values) => ({
+export const setErrorMessage = ({ errorMessage }: ValuesType) => ({
     type: types.SET_ERROR_MESSAGE,
     payload: { errorMessage },
 } as const)
 
-// Display actions
+export const clearErrorMessage = () => ({
+    type: types.CLEAR_ERROR_MESSAGE,
+} as const)
 
+export const validateValue = ({ value, name }: ValidateType) => ({
+    type: types.VALIDATE_VALUE,
+    payload: { value, name },
+} as const)
+
+// Display actions
 export const setInterfaceMode = () => ({
     type: types.SET_INTERFACE_MODE,
 } as const)
@@ -46,8 +60,4 @@ export const setCount = () => ({
 
 export const incrementCount = () => ({
     type: types.INCREMENT_COUNT,
-} as const)
-
-export const resetCount = () => ({
-    type: types.RESET_COUNT,
 } as const)

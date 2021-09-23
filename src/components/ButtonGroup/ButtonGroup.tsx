@@ -1,39 +1,20 @@
 import React from 'react'
-import { InterfaceType } from '../../App'
 import s from './ButtonGroup.module.css'
 import { SettingsButton } from './SettingsButton/SettingsButton'
-import { CounterButton } from './CounterButton/CounterButton'
+import { CounterButtons } from './CounterButton/CounterButtons'
+import { useSelector } from 'react-redux'
+import { interfaceModeSelector } from '../../store/selectors/counter'
 
-type ButtonGroupType = {
-    interfaceMode: InterfaceType
-    count: number
-    error: string
-    minValue: number
-    maxValue: number
-    changeCountAndStorageCallback: (type: string) => void
-}
+export const ButtonGroup = React.memo(() => {
+    const interfaceMode = useSelector(interfaceModeSelector)
 
-export const ButtonGroup: React.FC<ButtonGroupType> = (
-    {
-        interfaceMode, count, error,
-        minValue, maxValue,
-        changeCountAndStorageCallback
-    }) => {
     return (
         <div className={ s.buttonsContainer }>
             {
-                interfaceMode === 'counter'
-                    ? <CounterButton
-                        count={ count }
-                        minValue={ minValue }
-                        maxValue={ maxValue }
-                        changeCountAndStorageCallback={ changeCountAndStorageCallback }
-                    /> : null
+                interfaceMode === 'display'
+                    ? <CounterButtons/> : null
             }
-            <SettingsButton
-                error={ error }
-                changeCountAndStorageCallback={ changeCountAndStorageCallback }
-            />
+            <SettingsButton/>
         </div>
     )
-}
+})
