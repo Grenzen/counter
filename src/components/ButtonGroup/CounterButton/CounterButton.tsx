@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from '../../Button/Button'
-import { SettingsButton } from '../SettingsButton/SettingsButton'
 
 type CounterButtonType = {
     count: number
