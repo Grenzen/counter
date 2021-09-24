@@ -2,38 +2,59 @@ import * as actions from '../actions/counter'
 import { CounterActionTypes } from '../actions/counter'
 import { VALIDATE_VALUE } from '../types/counter'
 
-const notNumber = 'value must be positive integer number'
-const positiveNumber = 'value must be positive integer or 0'
-const minNotHigherThanMax = 'min value must be less than max value'
-const maxNotLessThanMin = 'max value must be more than min value'
+type ValidateValueReturnType = {
+    newMinValue: string
+    newMaxValue: string
+    errorMessage: string
+}
 
-export const validationMiddleware = (store: any) => (next: any) => (action: CounterActionTypes) => {
+type ValidateValueType = {
+    value: string
+    name: string
+    maxValue: string
+    minValue: string
+}
+
+const errorMessages = {
+    notNumber: 'value must be positive integer number',
+    positiveNumber: 'value must be positive integer or 0',
+    minNotHigherThanMax: 'min value must be less than max value',
+    maxNotLessThanMin: 'max value must be more than min value',
+}
+
+export const validationMiddleware = (store: any) => (next: any) => (action: CounterActionTypes): CounterActionTypes => {
     switch (action.type) {
         case VALIDATE_VALUE: {
             next(actions.clearErrorMessage())
             const { name, value } = action.payload
             const { minValue, maxValue } = store.getState().counter
-            const number = parseInt(value)
-            if (isNaN(number))
-                return next(actions.setErrorMessage({ errorMessage: notNumber }))
-            else if (number < 0)
-                return next(actions.setErrorMessage({ errorMessage: positiveNumber }))
-            switch (name) {
-                case 'min value': {
-                    return number < maxValue
-                        ? next(actions.setMinValue({ minValue: number.toString() }))
-                        : next(actions.setErrorMessage({ errorMessage: minNotHigherThanMax }))
-                }
-                case 'max value': {
-                    return number > minValue
-                        ? next(actions.setMaxValue({ maxValue: number.toString() }))
-                        : next(actions.setErrorMessage({ errorMessage: maxNotLessThanMin }))
-
-                }
-            }
-            break
+            const { newMinValue, newMaxValue, errorMessage } = validateValue({
+                value: value, name: name, maxValue: maxValue, minValue: minValue,
+            })
+            if (errorMessage) return next(actions.setErrorMessage({ errorMessage: errorMessage }))
+            return newMinValue
+                ? next(actions.setMinValue({ minValue: newMinValue }))
+                : next(actions.setMaxValue({ maxValue: newMaxValue }))
         }
         default:
             return next(action)
+    }
+}
+
+const validateValue = ({ value, name, maxValue, minValue }: ValidateValueType): ValidateValueReturnType => {
+    const number = parseInt(value)
+    if (isNaN(number))
+        return { newMinValue: '', newMaxValue: '', errorMessage: errorMessages.notNumber }
+    else if (number < 0)
+        return { newMinValue: '', newMaxValue: '', errorMessage: errorMessages.positiveNumber }
+    if (name === 'min value') {
+        return number < +maxValue
+            ? { newMinValue: number.toString(), newMaxValue: '', errorMessage: '' }
+            : { newMinValue: '', newMaxValue: '', errorMessage: errorMessages.minNotHigherThanMax }
+    } else {
+        return number > +minValue
+            ? { newMinValue: '', newMaxValue: number.toString(), errorMessage: '' }
+            : { newMinValue: '', newMaxValue: '', errorMessage: errorMessages.maxNotLessThanMin }
+
     }
 }

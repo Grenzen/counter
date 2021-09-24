@@ -5,7 +5,7 @@ import { CounterStateType } from './counter'
 const initialState: CounterStateType = {
     minValue: '0',
     maxValue: '5',
-    count: 0,
+    count: '0',
     errorMessage: '',
     interfaceMode: 'display',
 }
@@ -60,23 +60,23 @@ test('should set correct counter', () => {
     const endState2 = counterReducer(endState1, actions.setCount())
     expect(initialState).not.toEqual(endState1)
     expect(endState1.minValue).toBe('4')
-    expect(endState1.count).toBe(0)
-    expect(endState2.count).toBe(4)
+    expect(endState1.count).toBe('0')
+    expect(endState2.count).toBe('4')
 })
 
 test('should correct increment counter', () => {
     const endState = counterReducer(initialState, actions.incrementCount())
 
     expect(initialState).not.toBe(endState)
-    expect(initialState.count).toBe(0)
-    expect(endState.count).toBe(1)
+    expect(initialState.count).toBe('0')
+    expect(endState.count).toBe('1')
 })
 
 test('should reset count to min value', () => {
     const endState1 = counterReducer(initialState, actions.incrementCount())
-    const endState2 = counterReducer(endState1, actions.resetCount())
+    const endState2 = counterReducer(endState1, actions.setCount())
 
     expect(endState1).not.toBe(endState2)
-    expect(endState1.count).toBe(1)
-    expect(endState2.count).toBe(+endState2.minValue)
+    expect(endState1.count).toBe('1')
+    expect(endState2.count).toBe(endState2.minValue)
 })
